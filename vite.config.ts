@@ -21,6 +21,7 @@ export default defineConfig({
     fs: {
       strict: true,
       deny: ["**/.*"],
+      allow: [".", "../attached_assets"],
     },
   },
 });

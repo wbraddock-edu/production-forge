@@ -18,6 +18,7 @@ import {
   Loader2, Sparkles, Eye, Clapperboard, Download, Search,
   Settings, FileText, Trash2, ScanSearch,
 } from "lucide-react";
+import lrapLogo from "@assets/lrap-logo.jpg";
 
 const TYPE_ICONS: Record<string, any> = {
   character: Users,
@@ -188,7 +189,7 @@ export default function ProjectWorkspace() {
               <ArrowLeft className="h-4 w-4" />
             </Button>
 
-            <img src="./lrap-logo.jpg" alt="LRAP" className="h-8 w-8 rounded object-cover shrink-0 hidden md:block" crossOrigin="anonymous" />
+            <img src={lrapLogo} alt="LRAP" className="h-8 w-8 rounded object-cover shrink-0 hidden md:block" />
 
             <div className="flex-1 min-w-0">
               <Input

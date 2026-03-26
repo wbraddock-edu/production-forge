@@ -12,6 +12,7 @@ import {
   Plus, Folder, Users, MapPin, Package, Film,
   Trash2, Loader2, Clapperboard,
 } from "lucide-react";
+import lrapLogo from "@assets/lrap-logo.jpg";
 
 export default function ProjectList() {
   const [, navigate] = useLocation();
@@ -50,10 +51,9 @@ export default function ProjectList() {
       <header className="border-b border-border bg-card">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center gap-4">
           <img
-            src="./lrap-logo.jpg"
+            src={lrapLogo}
             alt="LRAP"
             className="h-10 w-10 rounded-md object-cover"
-            crossOrigin="anonymous"
           />
           <div className="flex-1">
             <h1 className="text-lg font-semibold tracking-tight flex items-center gap-2">
