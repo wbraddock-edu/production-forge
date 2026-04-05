@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Plus, Folder, Users, MapPin, Package, Film,
   Trash2, Loader2, Clapperboard,
+  FileText, Box, BookOpen, Mic, Video, Camera,
 } from "lucide-react";
 import lrapLogo from "@assets/lrap-logo.jpg";
 
@@ -205,6 +206,44 @@ export default function ProjectList() {
           </div>
         )}
       </main>
+
+      {/* Cross-Promotion: The Forge Suite */}
+      <div className="max-w-6xl mx-auto px-6 mt-12">
+        <h2 className="text-sm font-mono font-semibold tracking-wider uppercase mb-2 text-muted-foreground">
+          The Forge Suite
+        </h2>
+        <p className="text-xs text-muted-foreground/70 mb-4">
+          Production Forge is part of a complete AI production toolkit by Little Red Apple Productions.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {[
+            { name: "Character Forge", url: "https://character.littleredappleproductions.com", icon: Users, desc: "AI-powered character development with multi-panel portrait studies and 11 art styles." },
+            { name: "Location Forge", url: "https://location.littleredappleproductions.com", icon: MapPin, desc: "AI-powered location scouting and environment visualization for film production." },
+            { name: "Manuscript Forge", url: "https://manuscript.littleredappleproductions.com", icon: FileText, desc: "Production readiness analysis for screenplays — story structure, character arcs, pacing, and dialogue." },
+            { name: "Props Forge", url: "https://props.littleredappleproductions.com", icon: Box, desc: "AI-powered prop identification and visual development from manuscript analysis." },
+            { name: "Scene Forge", url: "https://scene.littleredappleproductions.com", icon: Clapperboard, desc: "Scene breakdown and shot lists with 10-section profiles — lighting, sound, VFX, and emotional mapping." },
+            { name: "Story Forge", url: "https://github.com/wbraddock-edu/story-forge", icon: BookOpen, desc: "AI-assisted story development and screenplay writing with structured narrative tools." },
+            { name: "Sound Forge", url: "https://github.com/wbraddock-edu/sound-forge", icon: Mic, desc: "AI-powered sound design — dialogue, ambience, foley, music cues, and scene sound profiles." },
+            { name: "Prompt Cinematographer", url: "https://github.com/wbraddock-edu/prompt-cinematographer", icon: Camera, desc: "Shot translation engine — converts cinematography language into AI video platform prompts." },
+          ].map((mod) => (
+            <a
+              key={mod.name}
+              href={mod.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-lg p-4 bg-card border border-border hover:border-primary/40 transition-colors"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <mod.icon className="w-4 h-4 text-primary" />
+                <span className="text-xs font-semibold text-foreground">{mod.name}</span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-muted-foreground">
+                {mod.desc}
+              </p>
+            </a>
+          ))}
+        </div>
+      </div>
 
       <footer className="border-t border-border mt-12 py-4">
         <div className="max-w-6xl mx-auto px-6">
