@@ -222,7 +222,7 @@ export default function ProjectList() {
             { name: "Manuscript Forge", url: "https://manuscript.littleredappleproductions.com", icon: FileText, desc: "Production readiness analysis for screenplays — story structure, character arcs, pacing, and dialogue." },
             { name: "Props Forge", url: "https://props.littleredappleproductions.com", icon: Box, desc: "AI-powered prop identification and visual development from manuscript analysis." },
             { name: "Scene Forge", url: "https://scene.littleredappleproductions.com", icon: Clapperboard, desc: "Scene breakdown and shot lists with 10-section profiles — lighting, sound, VFX, and emotional mapping." },
-            { name: "Story Forge", url: "https://github.com/wbraddock-edu/story-forge", icon: BookOpen, desc: "AI-assisted story development and screenplay writing with structured narrative tools." },
+            { name: "Story Forge", url: "https://story-forge.littleredappleproductions.com", icon: BookOpen, desc: "AI-assisted story development and screenplay writing with structured narrative tools." },
             { name: "Sound Forge", url: "https://github.com/wbraddock-edu/sound-forge", icon: Mic, desc: "AI-powered sound design — dialogue, ambience, foley, music cues, and scene sound profiles." },
             { name: "Prompt Cinematographer", url: "https://github.com/wbraddock-edu/prompt-cinematographer", icon: Camera, desc: "Shot translation engine — converts cinematography language into AI video platform prompts." },
           ].map((mod) => (
