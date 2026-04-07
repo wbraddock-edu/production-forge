@@ -1,14 +1,16 @@
 export function PerplexityAttribution() {
   return (
-    <footer className="w-full py-4 text-center text-xs text-muted-foreground">
+    <p className="text-[10px] text-center" style={{ color: "hsl(220,5%,35%)" }}>
+      Created with the Assistance of AI &copy; 2026{" "}
       <a
-        href="https://www.perplexity.ai/computer"
+        href="https://littleredappleproductions.com"
         target="_blank"
         rel="noopener noreferrer"
-        className="hover:text-foreground transition-colors"
+        style={{ color: "hsla(163,100%,42%,0.6)" }}
+        className="hover:underline"
       >
-        Created with Perplexity Computer
+        Little Red Apple Productions
       </a>
-    </footer>
+    </p>
   );
 }
