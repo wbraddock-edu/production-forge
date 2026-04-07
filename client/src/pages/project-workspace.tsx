@@ -18,7 +18,7 @@ import {
   Loader2, Sparkles, Eye, Clapperboard, Download, Search,
   Settings, FileText, Trash2, ScanSearch,
 } from "lucide-react";
-import lrapLogo from "@assets/lrap-logo.jpg";
+import productionForgeLogo from "@assets/production-forge-logo.png";
 
 const TYPE_ICONS: Record<string, any> = {
   character: Users,
@@ -189,7 +189,7 @@ export default function ProjectWorkspace() {
               <ArrowLeft className="h-4 w-4" />
             </Button>
 
-            <img src={lrapLogo} alt="LRAP" className="h-8 w-8 rounded object-cover shrink-0 hidden md:block" />
+            <img src={productionForgeLogo} alt="Production Forge" className="h-8 w-8 rounded object-cover shrink-0 hidden md:block" />
 
             <div className="flex-1 min-w-0">
               <Input

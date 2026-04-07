@@ -13,7 +13,7 @@ import {
   Trash2, Loader2, Clapperboard,
   FileText, Box, BookOpen, Mic, Video, Camera,
 } from "lucide-react";
-import lrapLogo from "@assets/lrap-logo.jpg";
+import productionForgeLogo from "@assets/production-forge-logo.png";
 
 export default function ProjectList() {
   const [, navigate] = useLocation();
@@ -52,8 +52,8 @@ export default function ProjectList() {
       <header className="border-b border-border bg-card">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center gap-4">
           <img
-            src={lrapLogo}
-            alt="LRAP"
+            src={productionForgeLogo}
+            alt="Production Forge"
             className="h-10 w-10 rounded-md object-cover"
           />
           <div className="flex-1">
