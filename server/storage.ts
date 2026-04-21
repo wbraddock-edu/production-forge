@@ -5,12 +5,15 @@ import {
   projects,
   items,
   referenceImages,
+  users,
   type Project,
   type InsertProject,
   type Item,
   type InsertItem,
   type ReferenceImage,
   type InsertReferenceImage,
+  type User,
+  type InsertUser,
 } from "@shared/schema";
 
 const sqlite = new Database("production-forge.db");
@@ -18,6 +21,7 @@ sqlite.pragma("journal_mode = WAL");
 sqlite.pragma("foreign_keys = ON");
 
 export const db = drizzle(sqlite);
+export const rawDb = sqlite;
 
 // Create tables
 sqlite.exec(`
@@ -52,6 +56,24 @@ sqlite.exec(`
     filename TEXT NOT NULL,
     created_at TEXT NOT NULL
   );
+
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    display_name TEXT,
+    created_at TEXT NOT NULL,
+    reset_token TEXT,
+    reset_token_expires_at TEXT
+  );
+
+  CREATE TABLE IF NOT EXISTS sessions (
+    sid TEXT PRIMARY KEY,
+    data TEXT NOT NULL,
+    expires_at INTEGER NOT NULL
+  );
+
+  CREATE INDEX IF NOT EXISTS sessions_expires_idx ON sessions(expires_at);
 `);
 
 export interface IStorage {
@@ -74,6 +96,12 @@ export interface IStorage {
   createReferenceImage(data: InsertReferenceImage): ReferenceImage;
   getReferenceImagesByProject(projectId: number): ReferenceImage[];
   deleteReferenceImage(id: number): void;
+
+  // Users
+  createUser(data: InsertUser): User;
+  getUserById(id: number): User | undefined;
+  getUserByEmail(email: string): User | undefined;
+  updateUser(id: number, data: Partial<InsertUser>): User | undefined;
 }
 
 class SqliteStorage implements IStorage {
@@ -149,6 +177,23 @@ class SqliteStorage implements IStorage {
 
   deleteReferenceImage(id: number): void {
     db.delete(referenceImages).where(eq(referenceImages.id, id)).run();
+  }
+
+  // ── Users ──
+  createUser(data: InsertUser): User {
+    return db.insert(users).values(data).returning().get();
+  }
+
+  getUserById(id: number): User | undefined {
+    return db.select().from(users).where(eq(users.id, id)).get();
+  }
+
+  getUserByEmail(email: string): User | undefined {
+    return db.select().from(users).where(eq(users.email, email.toLowerCase())).get();
+  }
+
+  updateUser(id: number, data: Partial<InsertUser>): User | undefined {
+    return db.update(users).set(data).where(eq(users.id, id)).returning().get();
   }
 }
 

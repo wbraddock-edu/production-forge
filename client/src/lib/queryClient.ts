@@ -2,6 +2,42 @@ import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
 const API_BASE = "__PORT_5000__".startsWith("__") ? "" : "__PORT_5000__";
 
+// Bearer compatibility: if a bearer token was previously stored (pre-cookie
+// migration), keep sending it alongside the session cookie until the cookie
+// takes over on the next login/signup. Stored under the canonical Forge key.
+const BEARER_STORAGE_KEY = "forge.auth.token";
+
+function getBearerToken(): string | null {
+  try {
+    return typeof window !== "undefined" ? window.localStorage.getItem(BEARER_STORAGE_KEY) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function setBearerToken(token: string | null): void {
+  try {
+    if (typeof window === "undefined") return;
+    if (token) window.localStorage.setItem(BEARER_STORAGE_KEY, token);
+    else window.localStorage.removeItem(BEARER_STORAGE_KEY);
+  } catch {}
+}
+
+function buildHeaders(extra?: HeadersInit): HeadersInit {
+  const headers: Record<string, string> = {};
+  if (extra) {
+    const src = new Headers(extra);
+    src.forEach((v, k) => {
+      headers[k] = v;
+    });
+  }
+  const token = getBearerToken();
+  if (token && !headers["Authorization"] && !headers["authorization"]) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  return headers;
+}
+
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
@@ -16,8 +52,9 @@ export async function apiRequest(
 ): Promise<Response> {
   const res = await fetch(`${API_BASE}${url}`, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers: buildHeaders(data ? { "Content-Type": "application/json" } : undefined),
     body: data ? JSON.stringify(data) : undefined,
+    credentials: "include",
   });
 
   await throwIfResNotOk(res);
@@ -30,7 +67,10 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(`${API_BASE}${queryKey.join("/")}`);
+    const res = await fetch(`${API_BASE}${queryKey.join("/")}`, {
+      headers: buildHeaders(),
+      credentials: "include",
+    });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {
       return null;

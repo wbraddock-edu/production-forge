@@ -2,6 +2,22 @@ import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// ── Users ──
+export const users = sqliteTable("users", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  email: text("email").notNull().unique(),
+  passwordHash: text("password_hash").notNull(),
+  displayName: text("display_name"),
+  createdAt: text("created_at").notNull(),
+  resetToken: text("reset_token"),
+  resetTokenExpiresAt: text("reset_token_expires_at"),
+});
+
+export const insertUserSchema = createInsertSchema(users).omit({ id: true });
+export type InsertUser = z.infer<typeof insertUserSchema>;
+export type User = typeof users.$inferSelect;
+export type SafeUser = Pick<User, "id" | "email" | "displayName" | "createdAt">;
+
 // ── Projects ──
 export const projects = sqliteTable("projects", {
   id: integer("id").primaryKey({ autoIncrement: true }),
